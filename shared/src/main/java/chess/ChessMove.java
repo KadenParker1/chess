@@ -41,6 +41,11 @@ public class ChessMove {
         return super.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s%s", startPosition, endPosition);
+    }
+
     /**
      * Gets the type of piece to promote a pawn to if pawn promotion is part of this
      * chess move

@@ -9,6 +9,12 @@ package chess;
 public class ChessPosition {
     private final int row;
     private final int col;
+
+    @Override
+    public String toString() {
+        return String.format("[%d,%d]", row, col);
+    }
+
     public ChessPosition(int row, int col) {
         this.row = row;
         this.col = col;
