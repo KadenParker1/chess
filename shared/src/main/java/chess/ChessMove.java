@@ -26,6 +26,16 @@ public class ChessMove {
         throw new RuntimeException("Not implemented");
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     /**
      * Gets the type of piece to promote a pawn to if pawn promotion is part of this
      * chess move

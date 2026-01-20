@@ -32,6 +32,16 @@ public class ChessPiece {
         throw new RuntimeException("Not implemented");
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
     /**
      * @return which type of chess piece this piece is
      */
@@ -47,6 +57,8 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+
+
         throw new RuntimeException("Not implemented");
     }
 }
