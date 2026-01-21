@@ -110,6 +110,165 @@ public class PieceMovesCalculator{
 
     public Collection<ChessMove> calculatePawnMoves(ChessBoard board, ChessPosition myPosition) {
         List<ChessMove> moves = new ArrayList<>();
+        ChessPiece piece = board.getPiece(myPosition);
+        ChessGame.TeamColor color  = piece.getTeamColor();
+
+        if (color == ChessGame.TeamColor.BLACK) { // black pieces can only go one direction
+            if (myPosition.getRow() == 7) { // covers if pawn has not moved can move once or twice
+                ChessPosition down_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn()));
+                if (inBounds(down_Attempted_Move)) {
+                    if (checkIfEmpty(down_Attempted_Move)) {
+                        moves.add(new ChessMove(myPosition, down_Attempted_Move, null));
+                    }
+                    ChessPosition double_Down_Attempted_Move = new ChessPosition((myPosition.getRow() - 2), (myPosition.getColumn()));
+                    if (checkIfEmpty(down_Attempted_Move) && checkIfEmpty(double_Down_Attempted_Move)) {
+                        moves.add(new ChessMove(myPosition, double_Down_Attempted_Move, null));
+                    }
+                    ChessPosition down_Left_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() - 1));
+                    ChessPosition down_Right_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() + 1));
+
+                    if (inBounds(down_Left_Attempted_Move)) {
+                        if (checkIfCapturable(down_Left_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, down_Left_Attempted_Move, null));
+                        }
+                    }
+                    if (inBounds(down_Right_Attempted_Move)) {
+                    if (checkIfCapturable(down_Right_Attempted_Move)) {
+                        moves.add(new ChessMove(myPosition, down_Right_Attempted_Move, null));
+                    }
+                }
+            }
+            }
+
+            else if (myPosition.getRow() == 2) {
+                ChessPosition down_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn()));
+                if (inBounds(down_Attempted_Move)) {
+                    if (checkIfEmpty(down_Attempted_Move)) {
+                        moves.add(new ChessMove(myPosition, down_Attempted_Move, ChessPiece.PieceType.ROOK));
+                        moves.add(new ChessMove(myPosition, down_Attempted_Move, ChessPiece.PieceType.KNIGHT));
+                        moves.add(new ChessMove(myPosition, down_Attempted_Move, ChessPiece.PieceType.BISHOP));
+                        moves.add(new ChessMove(myPosition, down_Attempted_Move, ChessPiece.PieceType.QUEEN));
+                    }
+                    ChessPosition down_Left_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() - 1));
+                    ChessPosition down_Right_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() + 1));
+                    if (inBounds(down_Left_Attempted_Move)) {
+                        if (checkIfCapturable(down_Left_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, down_Left_Attempted_Move, ChessPiece.PieceType.ROOK));
+                            moves.add(new ChessMove(myPosition, down_Left_Attempted_Move, ChessPiece.PieceType.KNIGHT));
+                            moves.add(new ChessMove(myPosition, down_Left_Attempted_Move, ChessPiece.PieceType.BISHOP));
+                            moves.add(new ChessMove(myPosition, down_Left_Attempted_Move, ChessPiece.PieceType.QUEEN));
+
+                        }
+                    }
+                    if (inBounds(down_Right_Attempted_Move)) {
+                        if (checkIfCapturable(down_Right_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, down_Right_Attempted_Move, ChessPiece.PieceType.ROOK));
+                            moves.add(new ChessMove(myPosition, down_Right_Attempted_Move, ChessPiece.PieceType.KNIGHT));
+                            moves.add(new ChessMove(myPosition, down_Right_Attempted_Move, ChessPiece.PieceType.BISHOP));
+                            moves.add(new ChessMove(myPosition, down_Right_Attempted_Move, ChessPiece.PieceType.QUEEN));
+                        }
+                    }
+                }
+            }
+
+            else {
+                ChessPosition down_Attempted_Move = new ChessPosition((myPosition.getRow()-1), (myPosition.getColumn()));
+                    if (inBounds(down_Attempted_Move)) {
+                        if (checkIfEmpty(down_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, down_Attempted_Move, null));
+                        }
+                        ChessPosition down_Left_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() - 1));
+                        ChessPosition down_Right_Attempted_Move = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() + 1));
+                        if (inBounds(down_Left_Attempted_Move)) {
+                            if (checkIfCapturable(down_Left_Attempted_Move)) {
+                                moves.add(new ChessMove(myPosition, down_Left_Attempted_Move, null));
+                            }
+                        }
+                        if (inBounds(down_Right_Attempted_Move)) {
+                            if (checkIfCapturable(down_Right_Attempted_Move)) {
+                                moves.add(new ChessMove(myPosition, down_Right_Attempted_Move, null));
+                            }
+                        }
+                    }
+            }
+
+        }
+
+        if (color == ChessGame.TeamColor.WHITE) { // white pieces can only go one direction
+                if (myPosition.getRow() == 2) { // covers if pawn has not moved can move once or twice
+                    ChessPosition up_Attempted_Move = new ChessPosition((myPosition.getRow()+1), (myPosition.getColumn()));
+                       if (inBounds(up_Attempted_Move)) {
+                        if (checkIfEmpty(up_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, up_Attempted_Move, null));
+                        }
+                        ChessPosition double_Up_Attempted_Move = new ChessPosition((myPosition.getRow() + 2), (myPosition.getColumn()));
+                        if (checkIfEmpty(up_Attempted_Move) && checkIfEmpty(double_Up_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, double_Up_Attempted_Move, null));
+                        }
+                        ChessPosition up_Left_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn() - 1));
+                        ChessPosition up_Right_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn() + 1));
+                        if (checkIfCapturable(up_Left_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, up_Left_Attempted_Move, null));
+                        }
+                        if (checkIfCapturable(up_Right_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, up_Right_Attempted_Move, null));
+                        }
+                    }
+                }
+
+                else if (myPosition.getRow() == 7) {
+                    ChessPosition up_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn()));
+                    if (inBounds(up_Attempted_Move)) {
+                        if (checkIfEmpty(up_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, up_Attempted_Move, ChessPiece.PieceType.ROOK));
+                            moves.add(new ChessMove(myPosition, up_Attempted_Move, ChessPiece.PieceType.KNIGHT));
+                            moves.add(new ChessMove(myPosition, up_Attempted_Move, ChessPiece.PieceType.BISHOP));
+                            moves.add(new ChessMove(myPosition, up_Attempted_Move, ChessPiece.PieceType.QUEEN));
+                        }
+                        ChessPosition up_Left_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn() - 1));
+                        ChessPosition up_Right_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn() + 1));
+                        if (inBounds(up_Left_Attempted_Move)) {
+                            if (checkIfCapturable(up_Left_Attempted_Move)) {
+                                moves.add(new ChessMove(myPosition, up_Left_Attempted_Move, ChessPiece.PieceType.ROOK));
+                                moves.add(new ChessMove(myPosition, up_Left_Attempted_Move, ChessPiece.PieceType.KNIGHT));
+                                moves.add(new ChessMove(myPosition, up_Left_Attempted_Move, ChessPiece.PieceType.BISHOP));
+                                moves.add(new ChessMove(myPosition, up_Left_Attempted_Move, ChessPiece.PieceType.QUEEN));
+
+                            }
+                        }
+                        if (inBounds(up_Right_Attempted_Move)) {
+                            if (checkIfCapturable(up_Right_Attempted_Move)) {
+                                moves.add(new ChessMove(myPosition, up_Right_Attempted_Move, ChessPiece.PieceType.ROOK));
+                                moves.add(new ChessMove(myPosition, up_Right_Attempted_Move, ChessPiece.PieceType.KNIGHT));
+                                moves.add(new ChessMove(myPosition, up_Right_Attempted_Move, ChessPiece.PieceType.BISHOP));
+                                moves.add(new ChessMove(myPosition, up_Right_Attempted_Move, ChessPiece.PieceType.QUEEN));
+                            }
+                        }
+                }
+                }
+
+                else {
+                    ChessPosition up_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn()));
+                    if (inBounds(up_Attempted_Move)) {
+                        if (checkIfEmpty(up_Attempted_Move)) {
+                            moves.add(new ChessMove(myPosition, up_Attempted_Move, null));
+                        }
+                        ChessPosition up_Left_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn() - 1));
+                        ChessPosition up_Right_Attempted_Move = new ChessPosition((myPosition.getRow() + 1), (myPosition.getColumn() + 1));
+                        if (inBounds(up_Left_Attempted_Move)) {
+                            if (checkIfCapturable(up_Left_Attempted_Move)) {
+                                moves.add(new ChessMove(myPosition, up_Left_Attempted_Move, null));
+                            }
+                        }
+                        if (inBounds(up_Right_Attempted_Move)) {
+                            if (checkIfCapturable(up_Right_Attempted_Move)) {
+                                moves.add(new ChessMove(myPosition, up_Right_Attempted_Move, null));
+                            }
+                        }
+                    }
+                }
+            }
+
         return moves;
     }
 
@@ -488,9 +647,6 @@ public class PieceMovesCalculator{
                 }
             }
         }
-
-
-
         return moves;
     }
 
