@@ -175,22 +175,21 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        ChessPosition king_position = null;
+//        isInCheck(TeamColor teamColor)
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j<=8; j++) {
                 chess.ChessPiece piece = board.getPiece(new ChessPosition(i, j));
-                if (piece != null && piece.getPieceType() == ChessPiece.PieceType.KING && piece.getTeamColor()==teamColor){
-                    king_position = new ChessPosition(i, j);
+                if (piece != null && piece.getTeamColor() == teamColor){
+                    if (!validMoves(new ChessPosition(i, j) ).isEmpty()){
+                        return false;
+                    }
+
                 }
             }
         }
         // need to add way to escape checkmate using other pieces
-        if (isInCheck(teamColor) && validMoves(king_position) == null) {
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        return true;
     }
 
     @Override
