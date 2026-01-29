@@ -52,10 +52,10 @@ public class ChessGame {
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
         ChessPiece piece = board.getPiece(startPosition);
-        TeamColor color = piece.getTeamColor();
         if (piece == null) {
-            return null;
+            return Collections.emptyList();
         }
+        TeamColor color = piece.getTeamColor();
         Collection<ChessMove> possible_moves = piece.pieceMoves(board, startPosition);
         Collection<ChessMove> legal_moves = new ArrayList<>();
 
@@ -111,14 +111,13 @@ public class ChessGame {
             for (int j = 1; j<=8; j++) {
                 ChessPosition checkPosition = new ChessPosition(i, j);
                 chess.ChessPiece piece = board.getPiece(new ChessPosition(i, j));
-                TeamColor color = piece.getTeamColor();
-                if (color != null && color != teamColor){
+                if (piece != null && piece.getTeamColor() != teamColor){
                     Collection<ChessMove> moves = piece.pieceMoves(board, checkPosition);
                     Set<ChessPosition> endPositionSet = new HashSet<>();
                     for (ChessMove move : moves) {
                         endPositionSet.add(move.getEndPosition());
                     }
-                    if (endPositionSet.contains(checkPosition)){
+                    if (endPositionSet.contains(king_position)){
                         return true;
                     }
 
@@ -147,13 +146,27 @@ public class ChessGame {
                 }
             }
         }
-
+        // need to add way to escape checkmate using other pieces
         if (isInCheck(teamColor) && validMoves(king_position) == null) {
             return true;
         }
         else {
             return false;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessGame chessGame = (ChessGame) o;
+        return Objects.equals(board, chessGame.board) && teamTurn == chessGame.teamTurn;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, teamTurn);
     }
 
     /**
