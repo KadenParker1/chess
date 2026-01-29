@@ -91,13 +91,18 @@ public class ChessGame {
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j<=8; j++) {
                 chess.ChessPiece piece = board.getPiece(new ChessPosition(i, j));
-                if (piece != null && piece.getPieceType() == ChessPiece.PieceType.KING){
+                if (piece != null && piece.getPieceType() == ChessPiece.PieceType.KING && piece.getTeamColor()==teamColor){
                     king_position = new ChessPosition(i, j);
-
                 }
             }
         }
-        return true;
+
+        if (isInCheck(teamColor) && validMoves(king_position) == null) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
