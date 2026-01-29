@@ -22,7 +22,7 @@ public class ChessGame {
      * @return Which team's turn it is
      */
     public TeamColor getTeamTurn() {
-        throw new RuntimeException("Not implemented");
+        return teamTurn;
     }
 
     /**
@@ -31,7 +31,7 @@ public class ChessGame {
      * @param team the team whose turn it is
      */
     public void setTeamTurn(TeamColor team) {
-        throw new RuntimeException("Not implemented");
+        teamTurn = team;
     }
 
     /**
@@ -58,8 +58,11 @@ public class ChessGame {
         Collection<ChessMove> legal_moves = new ArrayList<>();
 
         for (ChessMove individual_move : possible_moves) {
+            ChessGame fakeGame = new ChessGame();
             ChessBoard copy = copyBoard(board);
-            copy.
+            fakeGame.setBoard(copy);
+            fakeGame.applyMoveHelperFunction(copy, individual_move);
+            if (fakeGame.isInCheck())
         }
 
         return legal_moves;
