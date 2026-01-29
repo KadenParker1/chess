@@ -57,6 +57,11 @@ public class ChessGame {
         Collection<ChessMove> possible_moves = piece.pieceMoves(board, startPosition);
         Collection<ChessMove> legal_moves = new ArrayList<>();
 
+        for (ChessMove individual_move : possible_moves) {
+            ChessBoard copy = copyBoard(board);
+            copy.
+        }
+
         return legal_moves;
     }
 
@@ -160,5 +165,11 @@ public class ChessGame {
             }
         }
         return copy;
+    }
+
+    private void applyMoveHelperFunction(ChessBoard board, ChessMove move){
+        ChessPiece piece = board.getPiece(move.getStartPosition());
+        board.addPiece(move.getEndPosition(), piece);
+        board.addPiece(move.getStartPosition(), null);
     }
 }
