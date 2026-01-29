@@ -86,11 +86,19 @@ public class ChessGame {
         if (legalMoves == null | !legalMoves.contains(move)){
             throw new InvalidMoveException("Move is Not Valid");
         }
+        if (teamTurn != piece.getTeamColor()) {
+            throw new InvalidMoveException("Move Your Color During Your Turn");
+
+        }
         if (piece.getPieceType() == ChessPiece.PieceType.PAWN) {   // pawn promotion logic
             if (teamTurn == TeamColor.BLACK) {
                 if (start.getRow() == 2) {
                     ChessPiece.PieceType promotionPieceType = move.getPromotionPiece();
                     board.addPiece(end, new ChessPiece(teamTurn, promotionPieceType));
+                    board.addPiece(start, null);
+                }
+                else{
+                    board.addPiece(end, piece);
                     board.addPiece(start, null);
                 }
             }
@@ -99,6 +107,10 @@ public class ChessGame {
                 if (start.getRow() == 7) {
                     ChessPiece.PieceType promotionPieceType = move.getPromotionPiece();
                     board.addPiece(end, new ChessPiece(teamTurn, promotionPieceType));
+                    board.addPiece(start, null);
+                }
+                else{
+                    board.addPiece(end, piece);
                     board.addPiece(start, null);
                 }
 
