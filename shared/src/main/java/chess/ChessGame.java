@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -49,8 +50,14 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
-        ChessPiece.PieceType type = board.startPosition.
+        ChessPiece piece = board.getPiece(startPosition);
+        if (piece == null) {
+            return null;
+        }
+        Collection<ChessMove> possible_moves = piece.pieceMoves(board, startPosition);
+        Collection<ChessMove> legal_moves = new ArrayList<>();
 
+        return;
     }
 
     /**
@@ -80,7 +87,17 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        ChessPosition king_position = null;
+        for (int i = 1; i <= 8; i++) {
+            for (int j = 1; j<=8; j++) {
+                chess.ChessPiece piece = board.getPiece(new ChessPosition(i, j));
+                if (piece != null && piece.getPieceType() == ChessPiece.PieceType.KING){
+                    king_position = new ChessPosition(i, j);
+
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -100,7 +117,7 @@ public class ChessGame {
      * @param board the new board to use
      */
     public void setBoard(ChessBoard board) {
-        board.resetBoard();
+        this.board = board;
     }
 
     /**
