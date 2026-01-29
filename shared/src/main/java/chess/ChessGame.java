@@ -57,7 +57,7 @@ public class ChessGame {
         Collection<ChessMove> possible_moves = piece.pieceMoves(board, startPosition);
         Collection<ChessMove> legal_moves = new ArrayList<>();
 
-        return;
+        return legal_moves;
     }
 
     /**
@@ -128,8 +128,6 @@ public class ChessGame {
             }
             return true;
         }
-
-
     }
 
     /**
@@ -148,5 +146,19 @@ public class ChessGame {
      */
     public ChessBoard getBoard() {
     return board;
+    }
+
+    private ChessBoard copyBoard(ChessBoard original){
+        ChessBoard copy = new ChessBoard();
+        for (int i = 1; i <= 8; i++) {
+            for (int j = 1; j<=8; j++) {
+                chess.ChessPosition attemped_pos = new ChessPosition(i, j);
+                if (original.getPiece(attemped_pos) != null) {
+                    ChessPiece piece = original.getPiece(attemped_pos);
+                    copy.addPiece(attemped_pos, piece);
+                }
+            }
+        }
+        return copy;
     }
 }
