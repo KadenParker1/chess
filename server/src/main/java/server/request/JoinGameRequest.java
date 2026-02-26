@@ -1,4 +1,4 @@
 package server.request;
 
-public class JoinGameRequest f{
+public class JoinGameRequest {
 }
