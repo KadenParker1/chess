@@ -8,6 +8,7 @@ public class MemoryUserDao implements UserDao{
     public UserData getUser(String username){
         return users.get(username);
     }
+
     public void createUser(UserData userData) throws DataAccessException {
         if (users.get(userData.username()) != null){
             throw new DataAccessException("Username already exists");
