@@ -24,20 +24,20 @@ public class RegisterHandler {
             RegisterRequest req = new Gson().fromJson(jsonBody, RegisterRequest.class);
             var result = service.register(req);
             ctx.status(200);
-            ctx.json(result);
+            ctx.result(gson.toJson(result));
         }
 
         catch (BadRequestException e) {
             ctx.status(400);
-            ctx.json(new ErrorMessage(e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
         }
         catch (AlreadyTakenException e) {
             ctx.status(403);
-            ctx.json(new ErrorMessage(e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
         }
         catch (Exception e) {
             ctx.status(500);
-            ctx.json(new ErrorMessage(e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
         }
     }
 }

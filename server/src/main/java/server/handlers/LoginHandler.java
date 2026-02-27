@@ -23,20 +23,21 @@ public class LoginHandler {
             LoginRequest req = new Gson().fromJson(jsonBody, LoginRequest.class);
             var result = service.login(req);
             ctx.status(200);
-            ctx.json(result);
+            ctx.result(gson.toJson(result));
 
         }
         catch (BadRequestException e) {
             ctx.status(400);
-            ctx.json(new ErrorMessage(e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
+
         }
         catch (UnAuthorizedException e){
             ctx.status(401);
-            ctx.json(new ErrorMessage(e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
         }
         catch (DataAccessException e) {
             ctx.status(500);
-            ctx.json(new ErrorMessage("Error: " + e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage("Error: " + e.getMessage())));
 
         }
     }

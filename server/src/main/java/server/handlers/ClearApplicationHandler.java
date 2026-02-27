@@ -27,7 +27,7 @@ public class ClearApplicationHandler {
     }
     catch (DataAccessException e) {
         ctx.status(500);
-        ctx.json(new ErrorMessage("Error: " + e.getMessage()));
+        ctx.result(gson.toJson(new ErrorMessage("Error: " + e.getMessage())));
 
     }
 

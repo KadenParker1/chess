@@ -26,12 +26,12 @@ public class LogoutHandler {private final UserService service;
 
         catch (UnAuthorizedException e){
             ctx.status(401);
-            ctx.json(new ErrorMessage(e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
 
         }
         catch (DataAccessException e) {
             ctx.status(500);
-            ctx.json(new ErrorMessage("Error: " + e.getMessage()));
+            ctx.result(gson.toJson(new ErrorMessage("Error: " + e.getMessage())));
 
         }
     }

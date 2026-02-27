@@ -67,7 +67,6 @@ public class UserService {
 
         AuthData auth = authDao.createAuth(username);
         return new LoginResult(username, auth.authToken());
-
     }
 
 
