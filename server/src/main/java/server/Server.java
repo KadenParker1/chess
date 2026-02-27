@@ -4,6 +4,7 @@ import dataaccess.MemoryAuthDao;
 import dataaccess.MemoryGameDao;
 import dataaccess.MemoryUserDao;
 import io.javalin.*;
+import server.handlers.ClearApplicationHandler;
 import service.ClearService;
 import service.GameService;
 import service.UserService;
@@ -11,18 +12,28 @@ import service.UserService;
 public class Server {
 
     private final Javalin javalin;
+//    private final UserService userService;
+//    private final GameService gameService;
+    private final ClearService clearService;
+
     public Server() {
         javalin = Javalin.create(config -> config.staticFiles.add("web"));
         var authDao = new MemoryAuthDao();
         var userDao = new MemoryUserDao();
         var gameDao = new MemoryGameDao();
 
-        this.userService = new UserService(userDao, authDao);
-        this.gameService = new GameService(gameDao, authDao);
+//        this.userService = new UserService(userDao, authDao);
+//        this.gameService = new GameService(gameDao, authDao);
         this.clearService = new ClearService(authDao, userDao, gameDao);
 
-
+        ClearApplicationHandler clearHandler = new ClearApplicationHandler(clearService);
         // Register your endpoints and exception handlers here.
+
+        javalin.delete("/db", clearHandler::handle);
+        javalin.exception(Exception.class, (e, ctx) -> {
+            ctx.status(500);
+            ctx.result("{ \"message\": \"Error: " + e.getMessage() + "\" }");
+        });
 
     }
 
