@@ -8,7 +8,9 @@ import model.UserData;
 import server.handlers.exceptions.AlreadyTakenException;
 import server.handlers.exceptions.BadRequestException;
 import server.handlers.exceptions.UnAuthorizedException;
+import server.request.LoginRequest;
 import server.request.RegisterRequest;
+import server.result.LoginResult;
 import server.result.LogoutResult;
 import server.result.RegisterResult;
 
@@ -45,6 +47,27 @@ public class UserService {
         }
 
         authDao.deleteAuth(authToken);
+    }
+
+    public LoginResult login(LoginRequest request) throws BadRequestException, DataAccessException, UnAuthorizedException{
+        String username = request.username();
+        String password = request.password();
+        if (username==null || password==null){
+            throw new BadRequestException("Error: bad request");
+        }
+
+        UserData user = userDao.getUser(username);
+        if (user == null){
+            throw new UnAuthorizedException(("Error: unauthorized"));
+        }
+
+        if (!password.equals(user.password())){
+            throw new UnAuthorizedException(("Error: unauthorized"));
+        }
+
+        AuthData auth = authDao.createAuth(username);
+        return new LoginResult(username, auth.authToken());
+
     }
 
 

@@ -5,6 +5,7 @@ import dataaccess.MemoryGameDao;
 import dataaccess.MemoryUserDao;
 import io.javalin.*;
 import server.handlers.ClearApplicationHandler;
+import server.handlers.LoginHandler;
 import server.handlers.LogoutHandler;
 import server.handlers.RegisterHandler;
 import server.result.ErrorMessage;
@@ -32,11 +33,13 @@ public class Server {
         ClearApplicationHandler clearHandler = new ClearApplicationHandler(clearService);
         RegisterHandler registerHandler = new RegisterHandler(userService);
         LogoutHandler logoutHandler = new LogoutHandler(userService);
+        LoginHandler loginHandler = new LoginHandler(userService);
         // Register your endpoints and exception handlers here.
 
         javalin.delete("/db", clearHandler::handle);
         javalin.post("/user", registerHandler::handle);
         javalin.delete("/session", logoutHandler::handle);
+        javalin.post("/session", loginHandler::handle);
         javalin.exception(Exception.class, (e, ctx) -> {
             ctx.status(500);
             ctx.json(new ErrorMessage("Error: " + e.getMessage()));

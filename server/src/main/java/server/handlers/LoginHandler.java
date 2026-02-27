@@ -1,22 +1,42 @@
 package server.handlers;
 
 import com.google.gson.Gson;
+import dataaccess.DataAccessException;
+import server.handlers.exceptions.BadRequestException;
+import server.handlers.exceptions.UnAuthorizedException;
+import server.request.LoginRequest;
+import server.result.ErrorMessage;
 import service.UserService;
+import io.javalin.http.Context;
 
 public class LoginHandler {
     private final UserService service;
     private final Gson gson = new Gson();
 
-    public RegisterHandler(UserService service){
+    public LoginHandler(UserService service){
         this.service = service;
     }
 
-    public void handle() {
+    public void handle(Context ctx) {
         try {
+            String jsonBody = ctx.body();
+            LoginRequest req = new Gson().fromJson(jsonBody, LoginRequest.class);
+            var result = service.login(req);
+            ctx.status(200);
+            ctx.json(result);
 
         }
-
-        catch {
+        catch (BadRequestException e) {
+            ctx.status(400);
+            ctx.json(new ErrorMessage(e.getMessage()));
+        }
+        catch (UnAuthorizedException e){
+            ctx.status(401);
+            ctx.json(new ErrorMessage(e.getMessage()));
+        }
+        catch (DataAccessException e) {
+            ctx.status(500);
+            ctx.json(new ErrorMessage("Error: " + e.getMessage()));
 
         }
     }
