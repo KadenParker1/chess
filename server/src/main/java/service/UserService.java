@@ -20,7 +20,7 @@ public class UserService {
         this.authDao = authDao;
         this.userDao = userDao;
     }
-    public RegisterResult Register(RegisterRequest request) throws BadRequestException, AlreadyTakenException, DataAccessException {
+    public RegisterResult register(RegisterRequest request) throws BadRequestException, AlreadyTakenException, DataAccessException {
         String username = request.username();
         String password = request.password();
         String email = request.email();

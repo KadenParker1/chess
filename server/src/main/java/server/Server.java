@@ -6,6 +6,7 @@ import dataaccess.MemoryUserDao;
 import io.javalin.*;
 import server.handlers.ClearApplicationHandler;
 import server.handlers.RegisterHandler;
+import server.result.ErrorMessage;
 import service.ClearService;
 import service.GameService;
 import service.UserService;
@@ -23,7 +24,7 @@ public class Server {
         var userDao = new MemoryUserDao();
         var gameDao = new MemoryGameDao();
 
-        this.userService = new UserService(userDao, authDao);
+        this.userService = new UserService(authDao, userDao);
 //        this.gameService = new GameService(gameDao, authDao);
         this.clearService = new ClearService(authDao, userDao, gameDao);
 
@@ -35,7 +36,7 @@ public class Server {
         javalin.post("/user", registerHandler::handle);
         javalin.exception(Exception.class, (e, ctx) -> {
             ctx.status(500);
-            ctx.result("{ \"message\": \"Error: " + e.getMessage() + "\" }");
+            ctx.json(new ErrorMessage("Error: " + e.getMessage()));
         });
 
     }
