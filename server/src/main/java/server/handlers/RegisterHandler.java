@@ -24,7 +24,7 @@ public class RegisterHandler {
             RegisterRequest req = new Gson().fromJson(jsonBody, RegisterRequest.class);
             var result = service.register(req);
             ctx.status(200);
-            ctx.result(gson.toJson(result));
+            ctx.json(result);
         }
 
         catch (BadRequestException e) {

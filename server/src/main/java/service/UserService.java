@@ -7,7 +7,9 @@ import model.AuthData;
 import model.UserData;
 import server.handlers.exceptions.AlreadyTakenException;
 import server.handlers.exceptions.BadRequestException;
+import server.handlers.exceptions.UnAuthorizedException;
 import server.request.RegisterRequest;
+import server.result.LogoutResult;
 import server.result.RegisterResult;
 
 
@@ -36,4 +38,14 @@ public class UserService {
         return new RegisterResult(username, auth.authToken());
 
     }
+
+    public void logout(String authToken) throws UnAuthorizedException, DataAccessException {
+        if (authDao.getAuth(authToken) == null){
+            throw new UnAuthorizedException(("Error: unauthorized"));
+        }
+
+        authDao.deleteAuth(authToken);
+    }
+
+
 }
