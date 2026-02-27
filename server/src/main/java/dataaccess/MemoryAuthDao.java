@@ -20,8 +20,7 @@ public class MemoryAuthDao implements AuthDao {
     }
 
     public AuthData getAuth(String authToken) {
-        AuthData data = auths.get(authToken);
-            return data;
+        return auths.get(authToken);
     }
 
     public void deleteAuth(String AuthToken){
