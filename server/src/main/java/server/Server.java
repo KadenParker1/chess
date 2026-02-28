@@ -4,10 +4,7 @@ import dataaccess.MemoryAuthDao;
 import dataaccess.MemoryGameDao;
 import dataaccess.MemoryUserDao;
 import io.javalin.*;
-import server.handlers.ClearApplicationHandler;
-import server.handlers.LoginHandler;
-import server.handlers.LogoutHandler;
-import server.handlers.RegisterHandler;
+import server.handlers.*;
 import server.result.ErrorMessage;
 import service.ClearService;
 import service.GameService;
@@ -17,7 +14,7 @@ public class Server {
 
     private final Javalin javalin;
     private final UserService userService;
-//    private final GameService gameService;
+    private final GameService gameService;
     private final ClearService clearService;
 
     public Server() {
@@ -27,19 +24,25 @@ public class Server {
         var gameDao = new MemoryGameDao();
 
         this.userService = new UserService(authDao, userDao);
-//        this.gameService = new GameService(gameDao, authDao);
+        this.gameService = new GameService(authDao, gameDao);
         this.clearService = new ClearService(authDao, userDao, gameDao);
 
         ClearApplicationHandler clearHandler = new ClearApplicationHandler(clearService);
         RegisterHandler registerHandler = new RegisterHandler(userService);
         LogoutHandler logoutHandler = new LogoutHandler(userService);
         LoginHandler loginHandler = new LoginHandler(userService);
+        ListGamesHandler listGamesHandler = new ListGamesHandler(gameService);
+        CreateGameHandler createGameHandler = new CreateGameHandler(gameService);
+        JoinGameHandler joinGameHandler = new JoinGameHandler(gameService);
         // Register your endpoints and exception handlers here.
 
         javalin.delete("/db", clearHandler::handle);
         javalin.post("/user", registerHandler::handle);
         javalin.delete("/session", logoutHandler::handle);
         javalin.post("/session", loginHandler::handle);
+        javalin.get("/game", listGamesHandler::handle);
+        javalin.post("/game", createGameHandler::handle);
+        javalin.put("/game", joinGameHandler::handle);
         javalin.exception(Exception.class, (e, ctx) -> {
             ctx.status(500);
             ctx.json(new ErrorMessage("Error: " + e.getMessage()));

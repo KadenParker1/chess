@@ -1,4 +1,4 @@
 package server.result;
 
-public class ListGamesResult {
+public record ListGamesResult() {
 }
