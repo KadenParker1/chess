@@ -197,8 +197,6 @@ public class PieceMovesCalculator{
         List<ChessMove> moves = new ArrayList<>();
         ChessPiece piece = board.getPiece(myPosition);
         ChessGame.TeamColor color  = piece.getTeamColor();
-
-        if (color == ChessGame.TeamColor.BLACK) { // black pieces can only go one direction
             if (myPosition.getRow() == 7) { // covers if pawn has not moved can move once or twice
                 ChessPosition downAttemptedMove = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn()));
                 if (inBounds(downAttemptedMove)) {
@@ -276,8 +274,6 @@ public class PieceMovesCalculator{
                     }
                 }
             }
-
-        }
         return moves;
     }
 
