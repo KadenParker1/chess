@@ -218,20 +218,19 @@ public class ChessGame {
         if (isInCheck(teamColor)) {
             return false;
         }
-        else {
-            for (int i = 1; i <= 8; i++) {
-                for (int j = 1; j<=8; j++) {
-                    chess.ChessPiece piece = board.getPiece(new ChessPosition(i, j));
-                    if (piece != null && piece.getTeamColor() == teamColor){
-                        if (!validMoves(new ChessPosition(i, j) ).isEmpty()){
-                            return false;
-                        }
-
+        for (int i = 1; i <= 8; i++) {
+            for (int j = 1; j<=8; j++) {
+                chess.ChessPiece piece = board.getPiece(new ChessPosition(i, j));
+                if (piece != null && piece.getTeamColor() == teamColor){
+                    if (!validMoves(new ChessPosition(i, j) ).isEmpty()){
+                        return false;
                     }
+
                 }
             }
-            return true;
         }
+        return true;
+
     }
 
     /**
