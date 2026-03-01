@@ -18,8 +18,9 @@ public class ListGamesHandler {
 
     public void handle(Context ctx) {
         try {
-            var result = service.listGames(ctx.header("authorization"));
+            var gamesCollection = service.listGames(ctx.header("authorization"));
             ctx.status(200);
+            var result = new ListGamesResult(gamesCollection);
             ctx.result(gson.toJson(result));
 
         }

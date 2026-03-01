@@ -55,6 +55,9 @@ public class GameService {
         if (game == null){
             throw new BadRequestException(("Error: bad request"));
         }
+        if (req.playerColor() == null){
+            throw new BadRequestException(("Error: bad request"));
+        }
 
         if (req.playerColor().equals("WHITE")) {
             if (game.whiteUsername() != null){
