@@ -245,15 +245,11 @@ public class PieceMovesCalculator{
                     }
                     ChessPosition downLeftAttemptedMove = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() - 1));
                     ChessPosition downRightAttemptedMove = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() + 1));
-                    if (inBounds(downLeftAttemptedMove)) {
-                        if (checkIfCapturable(downLeftAttemptedMove)) {
+                    if (inBounds(downLeftAttemptedMove) && checkIfCapturable(downLeftAttemptedMove)) {
                             moves.add(new ChessMove(myPosition, downLeftAttemptedMove, null));
-                        }
                     }
-                    if (inBounds(downRightAttemptedMove)) {
-                        if (checkIfCapturable(downRightAttemptedMove)) {
+                    if (inBounds(downRightAttemptedMove) && checkIfCapturable(downRightAttemptedMove)) {
                             moves.add(new ChessMove(myPosition, downRightAttemptedMove, null));
-                        }
                     }
                 }
             }
