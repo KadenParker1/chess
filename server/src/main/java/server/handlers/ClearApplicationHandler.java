@@ -19,7 +19,7 @@ public class ClearApplicationHandler {
 
     public void handle(Context ctx) {
     try {
-        service.ClearApplication();
+        service.clearApplication();
         ctx.status(200);
         ClearResult result = new ClearResult();
         ctx.result(gson.toJson(result));

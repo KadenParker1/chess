@@ -30,7 +30,7 @@ public class ClearServiceTests {
     @DisplayName("Clear Application - success")
     public void clearApplicationSuccess() throws DataAccessException{
         userDao.createUser(new model.UserData("Kaden Parker", "123", "kaden@gmail.com"));
-        assertDoesNotThrow(() -> service.ClearApplication());
+        assertDoesNotThrow(() -> service.clearApplication());
         assertNull(userDao.getUser("Kaden Parker"), "UserDao should be empty after clear");
 
     }

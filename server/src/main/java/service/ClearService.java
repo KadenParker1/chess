@@ -22,7 +22,7 @@ public class ClearService {
     }
 
 
-    public void ClearApplication() throws DataAccessException {
+    public void clearApplication() throws DataAccessException {
         authDao.clearAuths();
         gameDao.clearGames();
         userDao.clearUsers();

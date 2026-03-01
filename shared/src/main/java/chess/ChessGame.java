@@ -56,20 +56,20 @@ public class ChessGame {
             return Collections.emptyList();
         }
         TeamColor color = piece.getTeamColor();
-        Collection<ChessMove> possible_moves = piece.pieceMoves(board, startPosition);
-        Collection<ChessMove> legal_moves = new ArrayList<>();
+        Collection<ChessMove> possiblemoves = piece.pieceMoves(board, startPosition);
+        Collection<ChessMove> legalmoves = new ArrayList<>();
 
-        for (ChessMove individual_move : possible_moves) {
+        for (ChessMove individualmove : possiblemoves) {
             ChessGame fakeGame = new ChessGame();
             ChessBoard copy = copyBoard(board);
             fakeGame.setBoard(copy);
-            fakeGame.applyMoveHelperFunction(copy, individual_move);
+            fakeGame.applyMoveHelperFunction(copy, individualmove);
             if (!fakeGame.isInCheck(color)){
-                legal_moves.add(individual_move);
+                legalmoves.add(individualmove);
             }
         }
 
-        return legal_moves;
+        return legalmoves;
     }
 
     /**
@@ -135,12 +135,12 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        ChessPosition king_position = null;
+        ChessPosition kingposition = null;
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j<=8; j++) {
                 chess.ChessPiece piece = board.getPiece(new ChessPosition(i, j));
                 if (piece != null && piece.getPieceType() == ChessPiece.PieceType.KING && piece.getTeamColor()==teamColor){
-                    king_position = new ChessPosition(i, j);
+                    kingposition = new ChessPosition(i, j);
                 }
             }
             }
@@ -155,7 +155,7 @@ public class ChessGame {
                     for (ChessMove move : moves) {
                         endPositionSet.add(move.getEndPosition());
                     }
-                    if (endPositionSet.contains(king_position)){
+                    if (endPositionSet.contains(kingposition)){
                         return true;
                     }
 
@@ -256,10 +256,10 @@ public class ChessGame {
         ChessBoard copy = new ChessBoard();
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j<=8; j++) {
-                chess.ChessPosition attemped_pos = new ChessPosition(i, j);
-                if (original.getPiece(attemped_pos) != null) {
-                    ChessPiece piece = original.getPiece(attemped_pos);
-                    copy.addPiece(attemped_pos, piece);
+                chess.ChessPosition attempedpos = new ChessPosition(i, j);
+                if (original.getPiece(attempedpos) != null) {
+                    ChessPiece piece = original.getPiece(attempedpos);
+                    copy.addPiece(attempedpos, piece);
                 }
             }
         }
