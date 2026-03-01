@@ -63,14 +63,14 @@ public class GameService {
 
         if (req.playerColor().equals("WHITE")) {
             if (game.whiteUsername() != null){
-                throw new AlreadyTakenException(("Error: bad request"));
+                throw new AlreadyTakenException(("Error: already taken"));
             }
             gameDao.updateGame(req.gameID(), "WHITE", username);
         }
 
         else if (req.playerColor().equals("BLACK")) {
             if (game.blackUsername() != null){
-                throw new AlreadyTakenException(("Error: bad request"));
+                throw new AlreadyTakenException(("Error: already taken"));
             }
             gameDao.updateGame(req.gameID(), "BLACK", username);
         }

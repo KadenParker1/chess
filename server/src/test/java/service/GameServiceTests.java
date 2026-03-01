@@ -16,12 +16,10 @@ public class GameServiceTests {private GameService gameService;
 
     @BeforeEach
     public void setup() throws DataAccessException {
-        // Initialize Memory DAOs and Service
         authDao = new MemoryAuthDao();
         gameDao = new MemoryGameDao();
         gameService = new GameService(authDao, gameDao);
 
-        // Create a "logged in" state for positive tests
         AuthData auth = authDao.createAuth("testUser");
         validAuthToken = auth.authToken();
     }
@@ -60,7 +58,7 @@ public class GameServiceTests {private GameService gameService;
         int id = game.gameID();
         JoinGameRequest req2 = new JoinGameRequest("WHITE", id);
         gameService.joinGame(validAuthToken, req2);
-        JoinGameRequest badRequest = new JoinGameRequest("CATS", id);
+        JoinGameRequest badRequest = new JoinGameRequest("WHITE", id);
         assertThrows(AlreadyTakenException.class, () -> gameService.joinGame(validAuthToken, badRequest));
     }
 
