@@ -234,22 +234,17 @@ public class PieceMovesCalculator{
                     }
                     ChessPosition downLeftAttemptedMove = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() - 1));
                     ChessPosition downRightAttemptedMove = new ChessPosition((myPosition.getRow() - 1), (myPosition.getColumn() + 1));
-                    if (inBounds(downLeftAttemptedMove)) {
-                        if (checkIfCapturable(downLeftAttemptedMove)) {
+                    if (inBounds(downLeftAttemptedMove) && checkIfCapturable(downLeftAttemptedMove)) {
                             moves.add(new ChessMove(myPosition, downLeftAttemptedMove, ChessPiece.PieceType.ROOK));
                             moves.add(new ChessMove(myPosition, downLeftAttemptedMove, ChessPiece.PieceType.KNIGHT));
                             moves.add(new ChessMove(myPosition, downLeftAttemptedMove, ChessPiece.PieceType.BISHOP));
                             moves.add(new ChessMove(myPosition, downLeftAttemptedMove, ChessPiece.PieceType.QUEEN));
-
-                        }
                     }
-                    if (inBounds(downRightAttemptedMove)) {
-                        if (checkIfCapturable(downRightAttemptedMove)) {
+                    if (inBounds(downRightAttemptedMove) && checkIfCapturable(downRightAttemptedMove)) {
                             moves.add(new ChessMove(myPosition, downRightAttemptedMove, ChessPiece.PieceType.ROOK));
                             moves.add(new ChessMove(myPosition, downRightAttemptedMove, ChessPiece.PieceType.KNIGHT));
                             moves.add(new ChessMove(myPosition, downRightAttemptedMove, ChessPiece.PieceType.BISHOP));
                             moves.add(new ChessMove(myPosition, downRightAttemptedMove, ChessPiece.PieceType.QUEEN));
-                        }
                     }
                 }
             }
