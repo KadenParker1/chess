@@ -72,6 +72,9 @@ public class GameService {
             }
             gameDao.updateGame(req.gameID(), "BLACK", username);
         }
+        else {
+            throw new BadRequestException(("Error: bad request"));
+        }
 
 
     }
