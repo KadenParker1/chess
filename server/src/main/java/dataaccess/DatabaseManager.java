@@ -52,6 +52,37 @@ public class DatabaseManager {
         }
     }
 
+    static public void createDataTables() throws DataAccessException {
+        try (var conn = getConnection()) {
+            var createUsers = """
+                    CREATE TABLE IF NOT EXISTS users (
+                    username VARCHAR(50) PRIMARY KEY,
+                    password VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL
+                    )
+                    
+                    """;
+            var createGames = """
+                    CREATE TABLE IF NOT EXISTS games (
+                    gameID INT AUTO_INCREMENT PRIMARY_KEY,
+                    whiteUsername VARCHAR(50),
+                    blackUsername VARCHAR(50,
+                    gameName VARCHAR(100),
+                    game JSON
+                    )
+                   """;
+            var createAuths = """
+                    CREATE TABLE IF NOT EXISTS auths (
+                    authToken VARCHAR(255) PRIMARY KEY,
+                    username VARCHAR(50) NOT NULL
+                    )
+                    """;
+        } catch (SQLException ex) {
+            throw new DataAccessException("Unable to Connect", ex);
+        }
+
+    }
+
     private static void loadPropertiesFromResources() {
         try (var propStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties")) {
             if (propStream == null) {
