@@ -50,8 +50,23 @@ public class SQLAuthDao implements AuthDao{
             throw new DataAccessException("Error Getting Auth", ex);
         }
     }
-    public void deleteAuth(String authToken){
+    public void deleteAuth(String authToken) throws DataAccessException {
+        try (var conn = manager.getConnection()){
+            var statement = conn.prepareStatement("DELETE from auths WHERE authToken = ?");
+            statement.setString(1, authToken);
+            statement.executeUpdate();
+        }
+        catch (SQLException ex) {
+            throw new DataAccessException("Error Getting Auth", ex);
+        }
 
     }
-    public void clearAuths() {};
-}
+    public void clearAuths() throws DataAccessException {
+
+        try (var conn = manager.getConnection()) {
+            var statement = conn.prepareStatement("DELETE FROM auths");
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataAccessException("Error Getting Auth", ex);
+        }
+    }}
