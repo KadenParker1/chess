@@ -77,10 +77,20 @@ public class DatabaseManager {
                     username VARCHAR(50) NOT NULL
                     )
                     """;
+            try (var statement = conn.createStatement()){
+                statement.executeUpdate(createGames);
+                statement.executeUpdate(createUsers);
+                statement.executeUpdate(createAuths);
+            }
+
         } catch (SQLException ex) {
             throw new DataAccessException("Unable to Connect", ex);
         }
 
+    }
+    public static void initialize() throws DataAccessException {
+        createDatabase();
+        createDataTables();
     }
 
     private static void loadPropertiesFromResources() {
