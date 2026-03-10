@@ -1,10 +1,9 @@
-package passoff.server;
+package passoff.server.dataaccess;
 
 import dataaccess.DataAccessException;
 import dataaccess.DatabaseManager;
 import dataaccess.SQLUserDao;
 import model.UserData;
-import org.eclipse.jetty.server.Authentication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
