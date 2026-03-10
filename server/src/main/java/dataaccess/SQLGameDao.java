@@ -21,13 +21,15 @@ public class SQLGameDao implements GameDao{
             try (var result = statement.executeQuery()) {
                 if (result.next()) {
                     if (playerColor.equals("WHITE")) {
-                        var statementTwo = conn.prepareStatement("INSERT INTO games (whiteUsername) VALUES (?)");
+                        var statementTwo = conn.prepareStatement("UPDATE games SET whiteUsername = ? WHERE gameID = ?");
                         statementTwo.setString(1, username);
+                        statementTwo.setInt(2, gameID);
                         statementTwo.executeUpdate();
                     }
                     if (playerColor.equals("BLACK")) {
-                        var statementTwo = conn.prepareStatement("INSERT INTO games (blackUsername) VALUES (?)");
+                        var statementTwo = conn.prepareStatement("UPDATE games SET blackUsername = ? WHERE gameID = ?");
                         statementTwo.setString(1, username);
+                        statementTwo.setInt(2, gameID);
                         statementTwo.executeUpdate();
                     }
                 } else {
