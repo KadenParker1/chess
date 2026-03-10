@@ -11,17 +11,20 @@ public class GameServiceTests {private GameService gameService;
     private AuthDao authDao;
     private GameDao gameDao;
     private String validAuthToken;
+    private DatabaseManager manager;
 
 
 
     @BeforeEach
     public void setup() throws DataAccessException {
-        authDao = new MemoryAuthDao();
-        gameDao = new MemoryGameDao();
+        manager = new DatabaseManager();
+        authDao = new SQLAuthDao(manager);
+        gameDao = new SQLGameDao(manager);
         gameService = new GameService(authDao, gameDao);
-
+        authDao.clearAuths();
         AuthData auth = authDao.createAuth("testUser");
         validAuthToken = auth.authToken();
+        gameDao.clearGames();
     }
 
     @Test

@@ -18,24 +18,27 @@ public class SQLGameDao implements GameDao{
         try (var conn = manager.getConnection()) {
             var statement = conn.prepareStatement("SELECT * FROM games WHERE gameID = ?");
             statement.setInt(1, gameID);
-            String color = null;
+            String column = null;
             if (playerColor.equals("WHITE")) {
-                color = "whiteUsername";
+                column = "whiteUsername";
             }
-            if (playerColor.equals("BLACK")) {
-                color = "whiteUsername";
+            else if (playerColor.equals("BLACK")) {
+                column = "blackUsername";
+            }
+            else {
+                throw new DataAccessException("Error: invalid player color");
             }
             try (var result = statement.executeQuery()) {
-                if (result.next()) {
-                        try (var statementTwo = conn.prepareStatement("UPDATE games SET ? = ? WHERE gameID = ?")) {
-                            statementTwo.setString(1, color);
-                            statementTwo.setString(2, username);
-                            statementTwo.setInt(3, gameID);
-                            statementTwo.executeUpdate();
-                        }
-                } else {
+                if (!result.next()) {
                     throw new DataAccessException("Error: Game ID not in database");
-                }
+                    }
+                    String sql = String.format("UPDATE games SET %s = ? WHERE gameID = ?", column);
+                    try (var statementTwo = conn.prepareStatement(sql)) {
+                        statementTwo.setString(1, username);
+                        statementTwo.setInt(2, gameID);
+                        statementTwo.executeUpdate();
+                    }
+
 
             }
         } catch (SQLException ex) {

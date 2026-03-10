@@ -15,13 +15,15 @@ public class ClearServiceTests {
     private UserDao userDao;
     private AuthDao authDao;
     private GameDao gamDao;
+    private DatabaseManager manager;
 
 
     @BeforeEach
-    public void setup(){
-        userDao = new MemoryUserDao();
-        authDao = new MemoryAuthDao();
-        gamDao = new MemoryGameDao();
+    public void setup() throws DataAccessException {
+        manager = new DatabaseManager();
+        userDao = new SQLUserDao(manager);
+        authDao = new SQLAuthDao(manager);
+        gamDao = new SQLGameDao(manager);
 
         service = new ClearService(authDao, userDao, gamDao);
     }

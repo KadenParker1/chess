@@ -18,6 +18,7 @@ public class SQLUserDao implements UserDao{
             statement.setString(1, username);
             try (var result = statement.executeQuery()){
                 if (result.next()){
+
                     String password = result.getString("password");
                     String email = result.getString("email");
                     return new UserData(username, password, email);
@@ -32,7 +33,6 @@ public class SQLUserDao implements UserDao{
 
     public void createUser(UserData userData) throws DataAccessException {
         String username = userData.username();
-        String password = userData.password();
         String email = userData.email();
         try (var conn = manager.getConnection()) {
             String hashedPassword = BCrypt.hashpw(userData.password(), BCrypt.gensalt());
