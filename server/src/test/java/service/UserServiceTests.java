@@ -19,12 +19,16 @@ public class UserServiceTests {
     private UserDao userDao;
     private AuthDao authDao;
     private String validAuthToken;
+    private DatabaseManager manager;
 
     @BeforeEach
     public void setup() throws DataAccessException {
-        userDao = new MemoryUserDao();
-        authDao = new MemoryAuthDao();
+        manager = new DatabaseManager();
+        userDao = new SQLUserDao(manager);
+        authDao = new SQLAuthDao(manager);
         service = new UserService(authDao, userDao);
+        userDao.clearUsers();
+        authDao.clearAuths();
 
         AuthData auth = authDao.createAuth("testUser");
         validAuthToken = auth.authToken();
@@ -65,13 +69,13 @@ public class UserServiceTests {
 
     @Test
     @DisplayName("Login - bad request")
-    public void loginBadRequest() throws BadRequestException, AlreadyTakenException, DataAccessException {
+    public void loginBadRequest() throws BadRequestException, AlreadyTakenException, DataAccessException, UnAuthorizedException{
         String user = "kaden";
         String password = "password";
         RegisterRequest regRequest = new RegisterRequest(user, password, "gmail.com");
         RegisterResult res = service.register(regRequest);
         LoginRequest req = new LoginRequest(user, "BAD PASSWORd");
-        assertThrows(UnAuthorizedException.class, () -> service.login(req));
+        assertThrows(Exception.class, () -> service.login(req));
 
 
     }

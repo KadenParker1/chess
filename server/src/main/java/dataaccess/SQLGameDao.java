@@ -82,6 +82,9 @@ public void clearGames() throws DataAccessException{
 
     public int createGame(String gameName) throws DataAccessException {
         try (var conn = manager.getConnection()) {
+            if (gameName == null){
+                throw new DataAccessException("Error: Could not retrieve gameID");
+            }
             var statement = conn.prepareStatement("INSERT INTO games (gameName, game) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             ChessGame game = new ChessGame();
             Gson gson = new Gson();

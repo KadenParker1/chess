@@ -43,7 +43,7 @@ public class SQLUserTests {
     @DisplayName("Get User - Positive")
     public void getUserPositive() throws DataAccessException {
         userDao.createUser(new UserData("kaden", "brown", "brown@town.com"));
-        UserData user = userDao.getUser("Ash");
+        UserData user = userDao.getUser("kaden");
         Assertions.assertNotNull(user);
     }
 
