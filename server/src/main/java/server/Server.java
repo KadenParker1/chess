@@ -1,8 +1,6 @@
 package server;
 
-import dataaccess.MemoryAuthDao;
-import dataaccess.MemoryGameDao;
-import dataaccess.MemoryUserDao;
+import dataaccess.*;
 import io.javalin.*;
 import server.handlers.*;
 import server.result.ErrorMessage;
@@ -19,13 +17,17 @@ public class Server {
 
     public Server() {
         javalin = Javalin.create(config -> config.staticFiles.add("web"));
-        var authDao = new MemoryAuthDao();
-        var userDao = new MemoryUserDao();
-        var gameDao = new MemoryGameDao();
+        var authManager = new DatabaseManager();
+        var userManager = new DatabaseManager();
+        var gameManager = new DatabaseManager();
+        var authDao = new SQLAuthDao(authManager);
+        var userDao = new SQLUserDao(userManager);
+        var gameDao = new SQLGameDao(gameManager);
 
         this.userService = new UserService(authDao, userDao);
         this.gameService = new GameService(authDao, gameDao);
         this.clearService = new ClearService(authDao, userDao, gameDao);
+        this.
 
         ClearApplicationHandler clearHandler = new ClearApplicationHandler(clearService);
         RegisterHandler registerHandler = new RegisterHandler(userService);
