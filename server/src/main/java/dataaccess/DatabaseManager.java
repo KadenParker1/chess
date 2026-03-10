@@ -64,9 +64,9 @@ public class DatabaseManager {
                     """;
             var createGames = """
                     CREATE TABLE IF NOT EXISTS games (
-                    gameID INT AUTO_INCREMENT PRIMARY_KEY,
+                    gameID INT AUTO_INCREMENT PRIMARY KEY,
                     whiteUsername VARCHAR(50),
-                    blackUsername VARCHAR(50,
+                    blackUsername VARCHAR(50),
                     gameName VARCHAR(100),
                     game JSON
                     )

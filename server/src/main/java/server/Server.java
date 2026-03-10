@@ -17,17 +17,21 @@ public class Server {
 
     public Server() {
         javalin = Javalin.create(config -> config.staticFiles.add("web"));
-        var authManager = new DatabaseManager();
-        var userManager = new DatabaseManager();
-        var gameManager = new DatabaseManager();
-        var authDao = new SQLAuthDao(authManager);
-        var userDao = new SQLUserDao(userManager);
-        var gameDao = new SQLGameDao(gameManager);
+        try {
+            var authManager = new DatabaseManager();
+            var userManager = new DatabaseManager();
+            var gameManager = new DatabaseManager();
+            var authDao = new SQLAuthDao(authManager);
+            var userDao = new SQLUserDao(userManager);
+            var gameDao = new SQLGameDao(gameManager);
 
-        this.userService = new UserService(authDao, userDao);
-        this.gameService = new GameService(authDao, gameDao);
-        this.clearService = new ClearService(authDao, userDao, gameDao);
-        this.
+            this.userService = new UserService(authDao, userDao);
+            this.gameService = new GameService(authDao, gameDao);
+            this.clearService = new ClearService(authDao, userDao, gameDao);
+        }
+        catch (DataAccessException e){
+            throw new RuntimeException("Failed to initialize database: " + e.getMessage());
+        }
 
         ClearApplicationHandler clearHandler = new ClearApplicationHandler(clearService);
         RegisterHandler registerHandler = new RegisterHandler(userService);
