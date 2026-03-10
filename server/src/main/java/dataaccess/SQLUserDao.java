@@ -3,6 +3,7 @@ import model.AuthData;
 import model.UserData;
 
 import java.sql.SQLException;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class SQLUserDao implements UserDao{
     final private dataaccess.DatabaseManager manager;
@@ -23,7 +24,6 @@ public class SQLUserDao implements UserDao{
                 }
                 return null;
             }
-
         }
         catch (SQLException ex) {
             throw new DataAccessException("Error Getting Auth", ex);
@@ -35,18 +35,19 @@ public class SQLUserDao implements UserDao{
         String password = userData.password();
         String email = userData.email();
         try (var conn = manager.getConnection()) {
+            String hashedPassword = BCrypt.hashpw(userData.password(), BCrypt.gensalt());
             var statement = conn.prepareStatement("SELECT * FROM users WHERE username = ?");
             statement.setString(1, username);
             try (var result = statement.executeQuery()) {
                 if (result.next()) {
-                    throw new DataAccessException("Username already exists");
+                    throw new DataAccessException("Error: Username already exists");
                 }
                 else {
                     var statementTwo = conn.prepareStatement("INSERT INTO users VALUES(?, ?, ?)");
                     statementTwo.setString(1, username);
-                    statementTwo.setString(2, password);
+                    statementTwo.setString(2, hashedPassword);
                     statementTwo.setString(3, email);
-                    statement.executeUpdate();
+                    statementTwo.executeUpdate();
                 }
                 }
             }

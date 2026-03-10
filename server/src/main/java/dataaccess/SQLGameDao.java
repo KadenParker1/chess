@@ -21,19 +21,21 @@ public class SQLGameDao implements GameDao{
             try (var result = statement.executeQuery()) {
                 if (result.next()) {
                     if (playerColor.equals("WHITE")) {
-                        var statementTwo = conn.prepareStatement("UPDATE games SET whiteUsername = ? WHERE gameID = ?");
-                        statementTwo.setString(1, username);
-                        statementTwo.setInt(2, gameID);
-                        statementTwo.executeUpdate();
+                        try (var statementTwo = conn.prepareStatement("UPDATE games SET whiteUsername = ? WHERE gameID = ?")) {
+                            statementTwo.setString(1, username);
+                            statementTwo.setInt(2, gameID);
+                            statementTwo.executeUpdate();
+                        }
                     }
                     if (playerColor.equals("BLACK")) {
-                        var statementTwo = conn.prepareStatement("UPDATE games SET blackUsername = ? WHERE gameID = ?");
-                        statementTwo.setString(1, username);
-                        statementTwo.setInt(2, gameID);
-                        statementTwo.executeUpdate();
+                        try (var statementTwo = conn.prepareStatement("UPDATE games SET blackUsername = ? WHERE gameID = ?")) {
+                            statementTwo.setString(1, username);
+                            statementTwo.setInt(2, gameID);
+                            statementTwo.executeUpdate();
+                        }
                     }
                 } else {
-                    throw new DataAccessException("Game ID not in database");
+                    throw new DataAccessException("Error: Game ID not in database");
                 }
 
             }
@@ -90,7 +92,7 @@ public void clearGames() throws DataAccessException{
                     int newGameID = gameId.getInt(1);
                     return newGameID;
                 } else {
-                    throw new DataAccessException("Could not retrieve gameID");
+                    throw new DataAccessException("Error: Could not retrieve gameID");
                 }
             }
 

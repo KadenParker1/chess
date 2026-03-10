@@ -13,6 +13,7 @@ import server.request.RegisterRequest;
 import server.result.LoginResult;
 import server.result.LogoutResult;
 import server.result.RegisterResult;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class UserService {
@@ -61,7 +62,7 @@ public class UserService {
             throw new UnAuthorizedException(("Error: unauthorized"));
         }
 
-        if (!password.equals(user.password())){
+        if (!BCrypt.checkpw(password, user.password())){
             throw new UnAuthorizedException(("Error: unauthorized"));
         }
 

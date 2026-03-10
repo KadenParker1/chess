@@ -29,15 +29,15 @@ public class RegisterHandler {
 
         catch (BadRequestException e) {
             ctx.status(400);
-            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
+            ctx.result(gson.toJson(new ErrorMessage("Error: " + e.getMessage())));
         }
         catch (AlreadyTakenException e) {
             ctx.status(403);
-            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
+            ctx.result(gson.toJson(new ErrorMessage("Error: " + e.getMessage())));
         }
         catch (Exception e) {
             ctx.status(500);
-            ctx.result(gson.toJson(new ErrorMessage(e.getMessage())));
+            ctx.result(gson.toJson(new ErrorMessage("Error: " + e.getMessage())));
         }
     }
 }

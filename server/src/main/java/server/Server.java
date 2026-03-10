@@ -30,7 +30,7 @@ public class Server {
             this.clearService = new ClearService(authDao, userDao, gameDao);
         }
         catch (DataAccessException e){
-            throw new RuntimeException("Failed to initialize database: " + e.getMessage());
+            throw new RuntimeException("Error: Failed to initialize database: " + e.getMessage());
         }
 
         ClearApplicationHandler clearHandler = new ClearApplicationHandler(clearService);
