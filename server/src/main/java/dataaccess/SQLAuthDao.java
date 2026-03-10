@@ -67,6 +67,6 @@ public class SQLAuthDao implements AuthDao{
             var statement = conn.prepareStatement("DELETE FROM auths");
             statement.executeUpdate();
         } catch (SQLException ex) {
-            throw new DataAccessException("Error Getting Auth", ex);
+            throw new DataAccessException("Error Clearing Auth Database", ex);
         }
     }}
