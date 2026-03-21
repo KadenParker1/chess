@@ -22,11 +22,11 @@ public class ChessClient {
             String line = scanner.nextLine();
             try {
                 result = eval(line);
-                System.out.print();
+                System.out.print(BLUE + result);
 
             }
             catch (Throwable e) {
-                System.out.print( + e.getMessage());
+                System.out.print(RED + e.getMessage());
             }
         }
 
@@ -39,7 +39,7 @@ public class ChessClient {
         return switch (state) {
             case SIGNEDOUT -> new PreLoginUI(server, this).eval(cmd, params);
             case SIGNEDIN -> new PostLoginUI(server, this).eval(cmd, params);
-            case IN_GAME -> new GameUI(server, this).eval(cmd, params);
+            case INGAME -> new GameUI(server, this).eval(cmd, params);
         };
     }
     private void printPrompt() {
