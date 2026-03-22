@@ -15,7 +15,9 @@ public class GameUI {
         };
         }
 
-        public void help() {
-
+        public String help() {
+        return """
+                - quit
+                """;
         }
 }

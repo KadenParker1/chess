@@ -5,10 +5,7 @@ import server.request.CreateGameRequest;
 import server.request.JoinGameRequest;
 import server.request.LoginRequest;
 import server.request.RegisterRequest;
-import server.result.CreateGameResult;
-import server.result.JoinGameResult;
-import server.result.LoginResult;
-import server.result.RegisterResult;
+import server.result.*;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -26,22 +23,43 @@ public class ServerFacade {
 
 
     public RegisterResult register(RegisterRequest request) {
-        var request = buildRequest();
+        var request = buildRequest(request);
         var response = sendRequest(request);
-        return handleResponse();
+        return handleResponse(response);
     }
 
     public LoginResult login(LoginRequest request) {
-
+        var request = buildRequest(request);
+        var response = sendRequest(request);
+        return handleResponse(response);
     }
 
     public JoinGameResult join(JoinGameRequest request) {
-
+        var request = buildRequest(request);
+        var response = sendRequest(request);
+        return handleResponse(response);
     }
 
     public CreateGameResult createGame(CreateGameRequest request) {
+        var request = buildRequest(request);
+        var response = sendRequest(request);
+        return handleResponse(response);
+    }
+
+    public LogoutResult logout(){
 
     }
+
+    public CreateGameResult createGame(CreateGameRequest){
+
+    }
+
+    public ListGamesResult listGames(String authToken) throws exception.ResponseException {
+        var request = buildRequest("GET", "/game", null, authToken);
+        var response = sendRequest(request);
+        return handleResponse(response, ListGamesResult.class);
+    }
+
     private HttpRequest buildRequest(String method, String path, Object body, String authToken){
         var request = HttpRequest.newBuilder()
                 .uri(URI.create(serverUrl + path))
