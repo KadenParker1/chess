@@ -20,39 +20,36 @@ public class ServerFacade {
         serverUrl = url;
     }
 
-
-
-    public RegisterResult register(RegisterRequest request) {
-        var request = buildRequest(request);
+    public RegisterResult register(RegisterRequest registerRequest) throws exception.ResponseException {
+        var request = buildRequest("POST", "/user", registerRequest, null);
         var response = sendRequest(request);
-        return handleResponse(response);
+        return handleResponse(response, RegisterResult.class);
     }
 
-    public LoginResult login(LoginRequest request) {
-        var request = buildRequest(request);
+    public LoginResult login(LoginRequest loginRequest) throws exception.ResponseException {
+        var request = buildRequest("POST", "/session", loginRequest, null);
         var response = sendRequest(request);
-        return handleResponse(response);
+        return handleResponse(response, LoginResult.class);
     }
 
-    public JoinGameResult join(JoinGameRequest request) {
-        var request = buildRequest(request);
+    public JoinGameResult join(JoinGameRequest joinGameRequest, String authToken) throws exception.ResponseException {
+        var request = buildRequest("PUT", "/game", joinGameRequest, authToken);
         var response = sendRequest(request);
-        return handleResponse(response);
+        return handleResponse(response, JoinGameResult.class);
     }
 
-    public CreateGameResult createGame(CreateGameRequest request) {
-        var request = buildRequest(request);
+    public CreateGameResult createGame(CreateGameRequest createGameRequest, String authToken) throws exception.ResponseException {
+        var request = buildRequest("POST", "/game", createGameRequest, authToken);
         var response = sendRequest(request);
-        return handleResponse(response);
+        return handleResponse(response, CreateGameResult.class);
     }
 
-    public LogoutResult logout(){
-
+    public LogoutResult logout(String authToken) throws exception.ResponseException {
+        var request = buildRequest("DELETE", "/session", null, authToken);
+        var response = sendRequest(request);
+        return handleResponse(response, LogoutResult.class);
     }
 
-    public CreateGameResult createGame(CreateGameRequest){
-
-    }
 
     public ListGamesResult listGames(String authToken) throws exception.ResponseException {
         var request = buildRequest("GET", "/game", null, authToken);
