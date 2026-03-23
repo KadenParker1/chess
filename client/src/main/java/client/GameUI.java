@@ -17,7 +17,8 @@ public class GameUI {
 
         public String help() {
         return """
-                - quit
+                quit                                     -   leave the application
+                help                                     -   help with possible commands
                 """;
         }
 }

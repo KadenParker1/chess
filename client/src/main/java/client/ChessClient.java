@@ -7,8 +7,20 @@ public class ChessClient {
     private final ServerFacade server;
     private final String serverUrl;
     private State state = State.SIGNEDOUT;
+    private String authToken = null;
 
-    public PetClient(String serverUrl) throws exception.ResponseException {
+
+    public void setAuthToken(String token){
+        this.authToken = token;
+    }
+    public String getAuthToken() {
+       return authToken;
+    }
+    public void setState(State state){
+        this.state = state;
+    }
+
+    public ChessClient(String serverUrl) throws exception.ResponseException {
         this.serverUrl = serverUrl;
         server = new ServerFacade(serverUrl);
     }
@@ -26,7 +38,7 @@ public class ChessClient {
 
             }
             catch (Throwable e) {
-                System.out.print(RED + e.getMessage());
+                System.out.print(RED + "An unexpected error has occurred. Please try again.");
             }
         }
 
@@ -43,7 +55,7 @@ public class ChessClient {
         };
     }
     private void printPrompt() {
-        System.out.print("\n" + RESET + ">>> " + GREEN);
+        System.out.print("\n" + RESET + "[" + state + "] >>> " + GREEN);
     }
 
 

@@ -23,7 +23,13 @@ public class PreLoginUI {
     public void register() {
 
     }
-    public void help() {
+    public String help() {
+        return """
+                register <USERNAME> <PASSWORD> <EMAIL>   -   register an account
+                login <USERNAME> <PASSWORD>              -   login to an account to play
+                quit                                     -   leave the application
+                help                                     -   help with possible commands
+                """;
 
     }
 }

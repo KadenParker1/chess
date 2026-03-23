@@ -62,7 +62,7 @@ public class ServerFacade {
                 .uri(URI.create(serverUrl + path))
                 .method(method, makeRequestBody(body));
         if (body != null) {
-            request.setHeader("Content-Type", "application/json");
+            request.header("Content-Type", "application/json");
         }
         if (authToken != null){
             request.header("Authorization", authToken);
