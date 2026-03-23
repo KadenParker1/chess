@@ -3,6 +3,7 @@ package client;
 import model.GameData;
 import server.result.CreateGameResult;
 import server.result.ListGamesResult;
+import server.result.LogoutResult;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,25 +20,51 @@ public class PostLoginUI {
     }
     public String eval(String cmd, String[] params) {
         return switch (cmd) {
-            case "logout" -> logout(params);
+            case "logout" -> logout();
             case "create game" -> createGame(params);
             case "list games" -> listGames();
-            case "play game" -> playGame(params);
-            case "observe game" -> observeGame();
+            case "observe game" -> observeGame(params);
+            case "join game" -> joinGame(params);
             default ->  "Help";
         };
     }
 
 
-    public void logout() {
+    public String logout() {
+        try {
+            String token = client.getAuthToken();
+            LogoutResult result = server.logout(token);
+            return BLUE + "Successfully logged out. Thanks for playing.";
+        }
+        catch (Exception e){
+            return RED + "An unexpected error has occurred. Please try again.";
+        }
 
     }
-    public void createGame() {
-        String token = client.getAuthToken();
-        CreateGameResult result = server.createGame(token);
+    public String createGame(String[] params) {
+        try {
+            String token = client.getAuthToken();
+            CreateGameResult result = server.createGame(token);
+            // do game result logic here
+        }
+        catch (Exception e){
+            return RED + "An unexpected error has occurred. Please try again.";
+        }
+    }
 
+    public String joinGame(String[] params) {
+        try {
+            int listIndex = Integer.parseInt(params[0]) - 1;
+
+        }
+
+        catch (Exception e){
+            return RED + "An unexpected error has occurred. Please try again.";
+        }
 
     }
+
+
     public String listGames() {
         try {
             String token = client.getAuthToken();
@@ -57,7 +84,7 @@ public class PostLoginUI {
         }
     }
 
-    public void observeGame() {
+    public String observeGame(String[] params) {
 
     }
     public String help() {
