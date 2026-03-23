@@ -1,12 +1,10 @@
 package server.handlers;
 
 import com.google.gson.Gson;
-import io.javalin.http.BadRequestResponse;
 import server.handlers.exceptions.AlreadyTakenException;
 import server.handlers.exceptions.BadRequestException;
-import server.request.RegisterRequest;
-import server.result.ErrorMessage;
-import server.result.RegisterResult;
+import model.result.request.RegisterRequest;
+import model.result.ErrorMessage;
 import service.UserService;
 import io.javalin.http.Context;
 

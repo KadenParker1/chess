@@ -3,7 +3,7 @@ package server;
 import dataaccess.*;
 import io.javalin.*;
 import server.handlers.*;
-import server.result.ErrorMessage;
+import model.result.ErrorMessage;
 import service.ClearService;
 import service.GameService;
 import service.UserService;

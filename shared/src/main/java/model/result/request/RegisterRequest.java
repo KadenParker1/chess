@@ -1,4 +1,4 @@
-package server.request;
+package model.result.request;
 
 public record RegisterRequest(String username, String password, String email) {
 }

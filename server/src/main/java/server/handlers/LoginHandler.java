@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import dataaccess.DataAccessException;
 import server.handlers.exceptions.BadRequestException;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.request.LoginRequest;
-import server.result.ErrorMessage;
+import model.result.request.LoginRequest;
+import model.result.ErrorMessage;
 import service.UserService;
 import io.javalin.http.Context;
 

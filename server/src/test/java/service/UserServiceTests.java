@@ -4,13 +4,12 @@ import model.AuthData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import model.UserData;
 import server.handlers.exceptions.AlreadyTakenException;
 import server.handlers.exceptions.BadRequestException;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.request.LoginRequest;
-import server.request.RegisterRequest;
-import server.result.RegisterResult;
+import model.result.request.LoginRequest;
+import model.result.request.RegisterRequest;
+import model.result.RegisterResult;
 
 import static org.junit.jupiter.api.Assertions.*;
 

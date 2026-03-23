@@ -3,8 +3,8 @@ import com.google.gson.Gson;
 import dataaccess.DataAccessException;
 import io.javalin.http.Context;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.result.ErrorMessage;
-import server.result.ListGamesResult;
+import model.result.ErrorMessage;
+import model.result.ListGamesResult;
 import service.GameService;
 
 

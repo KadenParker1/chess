@@ -4,12 +4,10 @@ import com.google.gson.Gson;
 import server.handlers.exceptions.AlreadyTakenException;
 import server.handlers.exceptions.BadRequestException;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.request.CreateGameRequest;
-import server.request.JoinGameRequest;
-import server.result.ErrorMessage;
-import server.result.JoinGameResult;
+import model.result.request.JoinGameRequest;
+import model.result.ErrorMessage;
+import model.result.JoinGameResult;
 import service.GameService;
-import service.UserService;
 
 public class JoinGameHandler {
     private final GameService service;

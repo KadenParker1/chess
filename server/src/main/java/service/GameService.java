@@ -1,18 +1,16 @@
 package service;
 
-import chess.ChessGame;
 import dataaccess.AuthDao;
 import dataaccess.DataAccessException;
 import dataaccess.GameDao;
-import dataaccess.UserDao;
 import model.AuthData;
 import model.GameData;
 import server.handlers.exceptions.AlreadyTakenException;
 import server.handlers.exceptions.BadRequestException;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.request.CreateGameRequest;
-import server.request.JoinGameRequest;
-import server.result.CreateGameResult;
+import model.result.request.CreateGameRequest;
+import model.result.request.JoinGameRequest;
+import model.result.CreateGameResult;
 
 import java.util.Collection;
 

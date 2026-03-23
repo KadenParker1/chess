@@ -4,9 +4,8 @@ import io.javalin.http.Context;
 import com.google.gson.Gson;
 import server.handlers.exceptions.BadRequestException;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.request.CreateGameRequest;
-import server.request.RegisterRequest;
-import server.result.ErrorMessage;
+import model.result.request.CreateGameRequest;
+import model.result.ErrorMessage;
 import service.GameService;
 
 public class CreateGameHandler {

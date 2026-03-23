@@ -1,11 +1,10 @@
 package client;
 import com.google.gson.Gson;
-import server.Server;
-import server.request.CreateGameRequest;
-import server.request.JoinGameRequest;
-import server.request.LoginRequest;
-import server.request.RegisterRequest;
-import server.result.*;
+import model.result.*;
+import model.result.request.CreateGameRequest;
+import model.result.request.JoinGameRequest;
+import model.result.request.LoginRequest;
+import model.result.request.RegisterRequest;
 
 import java.net.URI;
 import java.net.http.HttpClient;

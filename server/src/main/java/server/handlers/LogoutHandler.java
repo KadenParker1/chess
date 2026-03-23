@@ -2,10 +2,9 @@ package server.handlers;
 
 import com.google.gson.Gson;
 import dataaccess.DataAccessException;
-import org.eclipse.jetty.util.log.Log;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.result.ErrorMessage;
-import server.result.LogoutResult;
+import model.result.ErrorMessage;
+import model.result.LogoutResult;
 import service.UserService;
 import io.javalin.http.Context;
 

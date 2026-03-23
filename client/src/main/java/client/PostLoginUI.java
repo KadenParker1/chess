@@ -1,12 +1,11 @@
 package client;
 
 import model.GameData;
-import server.result.CreateGameResult;
-import server.result.ListGamesResult;
-import server.result.LogoutResult;
+import model.result.CreateGameResult;
+import model.result.ListGamesResult;
+import model.result.LogoutResult;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import static client.EscapeSequences.*;
 

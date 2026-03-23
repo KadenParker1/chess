@@ -1,8 +1,8 @@
 package service;
 import dataaccess.*;
+import model.result.request.JoinGameRequest;
 import org.junit.jupiter.api.*;
 import server.handlers.exceptions.*;
-import server.request.*;
 import model.*;
 import java.util.Collection;
 
@@ -30,7 +30,7 @@ public class GameServiceTests {private GameService gameService;
     @Test
     @DisplayName("Create Game - Success")
     public void createGameSuccess() throws Exception {
-        CreateGameRequest req = new CreateGameRequest("Epic Chess");
+        model.result.request.CreateGameRequest req = new model.result.request.CreateGameRequest("Epic Chess");
         var result = gameService.createGame(validAuthToken, req);
         assertNotNull(result);
         assertTrue(result.gameID() > 0);
@@ -39,14 +39,14 @@ public class GameServiceTests {private GameService gameService;
     @Test
     @DisplayName("Create Game - Bad Request")
     public void createGameBadRequest() {
-        CreateGameRequest req = new CreateGameRequest(null);
+        model.result.request.CreateGameRequest req = new model.result.request.CreateGameRequest(null);
         assertThrows(BadRequestException.class, () -> gameService.createGame(validAuthToken, req));
     }
 
     @Test
     @DisplayName("Join Game - Success")
     public void joinGameSuccess() throws Exception{
-        CreateGameRequest req = new CreateGameRequest("Epic Chess");
+        model.result.request.CreateGameRequest req = new model.result.request.CreateGameRequest("Epic Chess");
         var game = gameService.createGame(validAuthToken, req);
         int id = game.gameID();
         JoinGameRequest req2 = new JoinGameRequest("WHITE", id);
@@ -56,7 +56,7 @@ public class GameServiceTests {private GameService gameService;
     @Test
     @DisplayName("Join Game - Bad Request")
     public void joinGameBadRequest() throws Exception{
-        CreateGameRequest req = new CreateGameRequest("Epic Chess");
+        model.result.request.CreateGameRequest req = new model.result.request.CreateGameRequest("Epic Chess");
         var game = gameService.createGame(validAuthToken, req);
         int id = game.gameID();
         JoinGameRequest req2 = new JoinGameRequest("WHITE", id);
@@ -68,7 +68,7 @@ public class GameServiceTests {private GameService gameService;
     @Test
     @DisplayName("List Games - Success")
     public void listGamesSuccess() throws Exception{
-        gameService.createGame(validAuthToken, new CreateGameRequest("Game 1"));
+        gameService.createGame(validAuthToken, new model.result.request.CreateGameRequest("Game 1"));
         Collection<GameData> games = gameService.listGames(validAuthToken);
         assertEquals(1, games.size());
 

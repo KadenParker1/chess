@@ -8,11 +8,10 @@ import model.UserData;
 import server.handlers.exceptions.AlreadyTakenException;
 import server.handlers.exceptions.BadRequestException;
 import server.handlers.exceptions.UnAuthorizedException;
-import server.request.LoginRequest;
-import server.request.RegisterRequest;
-import server.result.LoginResult;
-import server.result.LogoutResult;
-import server.result.RegisterResult;
+import model.result.request.LoginRequest;
+import model.result.request.RegisterRequest;
+import model.result.LoginResult;
+import model.result.RegisterResult;
 import org.mindrot.jbcrypt.BCrypt;
 
 

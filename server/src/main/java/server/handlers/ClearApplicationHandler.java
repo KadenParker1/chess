@@ -3,8 +3,8 @@ package server.handlers;
 
 import com.google.gson.Gson;
 import dataaccess.DataAccessException;
-import server.result.ClearResult;
-import server.result.ErrorMessage;
+import model.result.ClearResult;
+import model.result.ErrorMessage;
 import service.ClearService;
 import io.javalin.http.Context;
 
