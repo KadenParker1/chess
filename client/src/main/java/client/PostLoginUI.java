@@ -4,6 +4,8 @@ import model.GameData;
 import model.result.CreateGameResult;
 import model.result.ListGamesResult;
 import model.result.LogoutResult;
+import model.result.request.CreateGameRequest;
+import model.result.request.JoinGameRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class PostLoginUI {
         try {
             String token = client.getAuthToken();
             LogoutResult result = server.logout(token);
+            client.setState(State.SIGNEDOUT);
             return BLUE + "Successfully logged out. Thanks for playing.";
         }
         catch (Exception e){
@@ -41,10 +44,14 @@ public class PostLoginUI {
 
     }
     public String createGame(String[] params) {
+        if (params.length != 1){
+            return RED + "Please give just a game name to create!";
+        }
         try {
             String token = client.getAuthToken();
-            CreateGameResult result = server.createGame(token);
-            // do game result logic here
+            String gameName = params[0].toUpperCase();
+            CreateGameResult result = server.createGame(new CreateGameRequest(gameName), token);
+           return GREEN + "Game " + gameName + " has been created! Type 'list' to see its id number!";
         }
         catch (Exception e){
             return RED + "An unexpected error has occurred. Please try again.";
@@ -52,13 +59,24 @@ public class PostLoginUI {
     }
 
     public String joinGame(String[] params) {
+        if (params.length != 2){
+            return RED + "Please give just a gameID and color to join!";
+        }
         try {
             int listIndex = Integer.parseInt(params[0]) - 1;
-
+            if (gameList == null || listIndex < 0 || listIndex >= gameList.size()) {
+                return RED + "Invalid game number. Please run 'list' to see available games";
+            }
+            int realGameId = gameList.get(listIndex).gameID();
+            server.join(new JoinGameRequest(params[1].toUpperCase(), realGameId), client.getAuthToken());
+            client.setState(State.INGAME);
+            return GREEN + "Joined " + gameList.get(listIndex).gameName() + " as " + params[1].toUpperCase();
         }
-
+        catch (NumberFormatException e) {
+            return RED + "ID must be a number to join.";
+        }
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again.";
+            return RED + "An unexpected error has occurred. Please try again!!!";
         }
 
     }
@@ -84,6 +102,25 @@ public class PostLoginUI {
     }
 
     public String observeGame(String[] params) {
+        if (params.length != 1){
+            return RED + "Please give just a game name to create!";
+        }
+        try {
+            int listIndex = Integer.parseInt(params[0]) - 1;
+            if (gameList == null || listIndex < 0 || listIndex >= gameList.size()) {
+                return RED + "Invalid game number. Please run 'list' to see available games";
+            }
+            int realGameId = gameList.get(listIndex).gameID();
+            server.join(new JoinGameRequest(null, realGameId), client.getAuthToken());
+            client.setState(State.INGAME);
+            return GREEN + "Observing!";
+        }
+        catch (NumberFormatException e) {
+            return RED + "ID must be a number to Observe.";
+        }
+        catch (Exception e){
+            return RED + "An unexpected error has occurred. Please try again!!!";
+        }
 
     }
     public String help() {
