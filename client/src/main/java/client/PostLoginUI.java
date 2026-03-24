@@ -22,11 +22,12 @@ public class PostLoginUI {
     public String eval(String cmd, String[] params) {
         return switch (cmd) {
             case "logout" -> logout();
-            case "create game" -> createGame(params);
-            case "list games" -> listGames();
-            case "observe game" -> observeGame(params);
-            case "join game" -> joinGame(params);
-            default ->  "Help";
+            case "create" -> createGame(params);
+            case "list" -> listGames();
+            case "observe" -> observeGame(params);
+            case "join" -> joinGame(params);
+            case "quit" -> "quit";
+            default ->  help();
         };
     }
 
@@ -39,7 +40,7 @@ public class PostLoginUI {
             return BLUE + "Successfully logged out. Thanks for playing.";
         }
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again.";
+            return RED + "Error: " + e.getMessage();
         }
 
     }
@@ -54,7 +55,7 @@ public class PostLoginUI {
            return GREEN + "Game " + gameName + " has been created! Type 'list' to see its id number!";
         }
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again.";
+            return RED + "Error: " + e.getMessage();
         }
     }
 
@@ -76,7 +77,7 @@ public class PostLoginUI {
             return RED + "ID must be a number to join.";
         }
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again!!!";
+            return RED + "Error: " + e.getMessage();
         }
 
     }
@@ -97,7 +98,7 @@ public class PostLoginUI {
             return sb.toString();
         }
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again.";
+            return RED + "Error: " + e.getMessage();
         }
     }
 
@@ -119,7 +120,7 @@ public class PostLoginUI {
             return RED + "ID must be a number to Observe.";
         }
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again!!!";
+            return RED + "Error: " + e.getMessage();
         }
 
     }

@@ -45,8 +45,11 @@ public class ChessClient {
     }
 
     public String eval(String input){
-        var tokens = input.toLowerCase().split(" ");
-        var cmd  = (tokens.length > 0) ? tokens[0] : "help";
+        if (input == null || input.trim().isEmpty()) {
+            return "";
+        }
+        var tokens = input.trim().split("\\s+");
+        var cmd  = tokens[0].toLowerCase();
         var params = Arrays.copyOfRange(tokens, 1, tokens.length);
         return switch (state) {
             case SIGNEDOUT -> new PreLoginUI(server, this).eval(cmd, params);
@@ -57,7 +60,5 @@ public class ChessClient {
     private void printPrompt() {
         System.out.print("\n" + RESET + "[" + state + "] >>> " + GREEN);
     }
-
-
 
 }

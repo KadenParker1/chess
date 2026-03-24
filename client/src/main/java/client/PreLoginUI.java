@@ -21,7 +21,8 @@ public class PreLoginUI {
         return switch (cmd) {
             case "login" -> login(params);
             case "register" -> register(params);
-            default ->  "Help";
+            case "quit" -> "quit";
+            default -> help();
         };
     }
 
@@ -30,8 +31,8 @@ public class PreLoginUI {
             return RED + "PLease give both a username and password to login. Try again!";
         }
         try {
-            String username = params[0].toUpperCase();
-            String password = params[1].toUpperCase();
+            String username = params[0];
+            String password = params[1];
             LoginRequest request = new LoginRequest(username, password);
             LoginResult result = server.login(request);
             client.setAuthToken(result.authToken());
@@ -40,24 +41,26 @@ public class PreLoginUI {
         }
 
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again!";
+            return RED + "Error: " + e.getMessage();
         }
 
     }
     public String register(String [] params) {
         if (params.length != 3){
-            return RED + "PLease give both a username and password to login. Try again!";
+            return RED + "PLease give both a username, password, and email to register. Try again!";
         }
         try {
-            String username = params[0].toUpperCase();
-            String password = params[1].toUpperCase();
-            String email = params[2].toUpperCase();
+            String username = params[0];
+            String password = params[1];
+            String email = params[2];
+            // DEBUG: Print what we are about to send
+            System.out.println("DEBUG: Sending RegisterRequest -> User: " + username + ", Pass: " + password + ", Email: " + email);
             RegisterRequest request = new RegisterRequest(username, password, email);
             server.register(request);
             return GREEN + "You have succesfully registered! Please login to continue";
         }
         catch (Exception e){
-            return RED + "An unexpected error has occurred. Please try again!";
+            return RED + "Error: " + e.getMessage();
         }
     }
 

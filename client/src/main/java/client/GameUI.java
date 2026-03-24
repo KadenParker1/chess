@@ -11,7 +11,8 @@ public class GameUI {
 
     public String eval(String cmd, String[] params) {
         return switch (cmd) {
-            default ->  "Help";
+            case "quit" -> "quit";
+            default ->  help();
         };
         }
 
