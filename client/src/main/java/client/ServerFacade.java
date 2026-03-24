@@ -102,7 +102,11 @@ public class ServerFacade {
 
         return null;
     }
-
+    public void clear() throws exception.ResponseException{
+        var request = buildRequest("DELETE", "/db", null, null);
+        var response = sendRequest(request);
+        handleResponse(response, null);
+    }
     private boolean isSuccessful(int status) {
         return status / 100 == 2;
     }
