@@ -73,11 +73,11 @@ public class PostLoginUI {
             server.join(new JoinGameRequest(params[1].toUpperCase(), realGameId), client.getAuthToken());
             client.setState(State.INGAME);
             ChessGame gameDataObject = gameList.get(listIndex).game();
-            if (params[1].toUpperCase().equals("WHITE"){
-                ChessBoardUI(gameDataObject.getBoard(), ChessGame.TeamColor.WHITE);
+            if (params[1].toUpperCase().equals("WHITE")){
+                ChessBoardUI.drawBoard(gameDataObject.getBoard(), ChessGame.TeamColor.WHITE);
             }
-           if (params[1].toUpperCase().equals("BLACK"){
-                ChessBoardUI(gameDataObject.getBoard(), ChessGame.TeamColor.BLACK);
+           if (params[1].toUpperCase().equals("BLACK")){
+                ChessBoardUI.drawBoard(gameDataObject.getBoard(), ChessGame.TeamColor.BLACK);
             }
             return GREEN + "Joined " + gameList.get(listIndex).gameName() + " as " + params[1].toUpperCase();
         }
