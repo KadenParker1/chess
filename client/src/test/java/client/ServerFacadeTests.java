@@ -1,5 +1,7 @@
 package client;
 
+import model.result.request.CreateGameRequest;
+import model.result.request.JoinGameRequest;
 import model.result.request.LoginRequest;
 import model.result.request.RegisterRequest;
 import org.junit.jupiter.api.*;
@@ -80,39 +82,53 @@ public class ServerFacadeTests {
     @Test
     @DisplayName("Join Success")
     public void joinSuccess() throws Exception {
-
-
+        facade.register(new RegisterRequest("player1", "pass", "p1@email.com"));
+        var auth = facade.login(new LoginRequest("player1", "pass"));
+        String authToken = auth.authToken();
+        var gameResult = facade.createGame(new CreateGameRequest("CooolGame"), authToken);
+        assertDoesNotThrow(() -> facade.join(new JoinGameRequest("WHITE", gameResult.gameID()), authToken));
     }
 
     @Test
     @DisplayName("Join Failure")
     public void joinFailure() throws Exception {
-
+        var auth = facade.register(new RegisterRequest("player1", "pass", "p1@email.com"));
+        assertThrows(exception.ResponseException.class, () ->
+                facade.join(new JoinGameRequest("WHITE", 999), auth.authToken())
+        );
     }
 
     @Test
     @DisplayName("CreateGame Success")
     public void createGameSuccess() throws Exception {
-
+        facade.register(new RegisterRequest("player1", "pass", "p1@email.com"));
+        var auth = facade.login(new LoginRequest("player1", "pass"));
+        String authToken = auth.authToken();
+        var id = facade.createGame(new CreateGameRequest("CooolGame"), authToken);
+        assertNotNull(id);
     }
 
     @Test
     @DisplayName("CreateGame Failure")
     public void createGameFailure() throws Exception {
-
+        assertThrows(exception.ResponseException.class, () -> facade.createGame(new CreateGameRequest("CooolGame"), "hghghghghghg"));
     }
 
 
     @Test
     @DisplayName("listGames Success")
     public void listGameSuccess() throws Exception {
-
+        var auth = facade.register(new RegisterRequest("player1", "pass", "p1@email.com"));
+        facade.createGame(new CreateGameRequest("Game1"), auth.authToken());
+        facade.createGame(new CreateGameRequest("Game2"), auth.authToken());
+        var res = facade.listGames(auth.authToken());
+        assertEquals(2, res.games().size());
     }
 
     @Test
     @DisplayName("listGames Failure")
     public void listGameFailure() throws Exception {
-
+        assertThrows(exception.ResponseException.class, () -> facade.listGames("hghghghghghg"));
     }
 
 
