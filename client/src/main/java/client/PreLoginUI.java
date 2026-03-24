@@ -47,24 +47,22 @@ public class PreLoginUI {
     }
     public String register(String [] params) {
         if (params.length != 3){
-            return RED + "PLease give both a username, password, and email to register. Try again!";
+            return RED + "Please give both a username, password, and email to register. Try again!";
         }
         try {
             String username = params[0];
             String password = params[1];
             String email = params[2];
-            // DEBUG: Print what we are about to send
-            System.out.println("DEBUG: Sending RegisterRequest -> User: " + username + ", Pass: " + password + ", Email: " + email);
             RegisterRequest request = new RegisterRequest(username, password, email);
             server.register(request);
-            return GREEN + "You have succesfully registered! Please login to continue";
+            String[] loginparams = {username, password};
+            login(loginparams);
+            return GREEN + "You have successfully registered!";
         }
         catch (Exception e){
             return RED + "Error: " + e.getMessage();
         }
     }
-
-
 
     public String help() {
         return """

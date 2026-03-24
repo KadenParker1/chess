@@ -8,6 +8,9 @@ public class ChessClient {
     private final String serverUrl;
     private State state = State.SIGNEDOUT;
     private String authToken = null;
+    private final PostLoginUI postLoginUI;
+    private final PreLoginUI preLoginUI;
+    private final GameUI gameUI;
 
 
     public void setAuthToken(String token){
@@ -23,6 +26,9 @@ public class ChessClient {
     public ChessClient(String serverUrl) throws exception.ResponseException {
         this.serverUrl = serverUrl;
         server = new ServerFacade(serverUrl);
+        this.postLoginUI = new PostLoginUI(server, this);
+        this.preLoginUI = new PreLoginUI(server, this);
+        this.gameUI = new GameUI(server, this);
     }
 
     public void run() {
@@ -52,9 +58,9 @@ public class ChessClient {
         var cmd  = tokens[0].toLowerCase();
         var params = Arrays.copyOfRange(tokens, 1, tokens.length);
         return switch (state) {
-            case SIGNEDOUT -> new PreLoginUI(server, this).eval(cmd, params);
-            case SIGNEDIN -> new PostLoginUI(server, this).eval(cmd, params);
-            case INGAME -> new GameUI(server, this).eval(cmd, params);
+            case SIGNEDOUT -> preLoginUI.eval(cmd, params);
+            case SIGNEDIN -> postLoginUI.eval(cmd, params);
+            case INGAME -> gameUI.eval(cmd, params);
         };
     }
     private void printPrompt() {

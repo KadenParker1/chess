@@ -93,7 +93,16 @@ public class PostLoginUI {
             }
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < gameList.size(); i++){
-                sb.append(String.format("%d: %s\n", i + 1, gameList.get(i).gameName()));
+                GameData game = gameList.get(i);
+                String message = game.gameName() + ": WhitePlayer: ";
+                if (game.whiteUsername() != null){
+                    message = message + game.whiteUsername();
+                }
+                message = message + " BlackPlayer: ";
+                if (game.blackUsername() != null){
+                    message = message + game.blackUsername();
+                }
+                sb.append(String.format("%d: %s\n", i + 1, message));
             }
             return sb.toString();
         }
@@ -104,7 +113,7 @@ public class PostLoginUI {
 
     public String observeGame(String[] params) {
         if (params.length != 1){
-            return RED + "Please give just a game name to create!";
+            return RED + "Please give just a game ID to observe!";
         }
         try {
             int listIndex = Integer.parseInt(params[0]) - 1;
@@ -126,7 +135,7 @@ public class PostLoginUI {
     }
     public String help() {
         return BLUE + """
-             create <NAME>             - create a new ga,e
+             create <NAME>             - create a new game
              list                      - list all active games
              join <ID> [WHITE|BLACK]   - join a game as a player
              observe <ID>              - watch a game in progress
