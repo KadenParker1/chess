@@ -1,5 +1,6 @@
 package client;
 
+import chess.ChessGame;
 import model.GameData;
 import model.result.CreateGameResult;
 import model.result.ListGamesResult;
@@ -71,6 +72,13 @@ public class PostLoginUI {
             int realGameId = gameList.get(listIndex).gameID();
             server.join(new JoinGameRequest(params[1].toUpperCase(), realGameId), client.getAuthToken());
             client.setState(State.INGAME);
+            ChessGame gameDataObject = gameList.get(listIndex).game();
+            if (params[1].toUpperCase().equals("WHITE"){
+                ChessBoardUI(gameDataObject.getBoard(), ChessGame.TeamColor.WHITE);
+            }
+           if (params[1].toUpperCase().equals("BLACK"){
+                ChessBoardUI(gameDataObject.getBoard(), ChessGame.TeamColor.BLACK);
+            }
             return GREEN + "Joined " + gameList.get(listIndex).gameName() + " as " + params[1].toUpperCase();
         }
         catch (NumberFormatException e) {
